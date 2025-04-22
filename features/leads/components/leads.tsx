@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { useLeads } from "../apis/use-leads";
 import { leadColumns } from "./lead-columns";
 import { LeadsDataTable } from "./leads-data-table";
+import { LeadsPieChart } from "./leads-pie-chart";
 import { NewLeadDialog } from "./new-lead-dialog";
 
 export const Leads = () => {
@@ -30,8 +31,13 @@ export const Leads = () => {
           New Lead
         </Button>
       </div>
+
       <div>
         <LeadsDataTable columns={leadColumns} data={leads.data || []} />
+      </div>
+
+      <div className="mt-8">
+        <LeadsPieChart leads={leads.data || []} />
       </div>
 
       {isOpen && <NewLeadDialog handleClose={() => setIsOpen(false)} />}
