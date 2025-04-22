@@ -8,9 +8,9 @@ import {
 
 import { LeadForm } from "./lead-form";
 
-export const NewLeadDialog = () => {
+export const NewLeadDialog = ({ handleClose }: { handleClose: () => void }) => {
   return (
-    <Dialog open>
+    <Dialog open onOpenChange={handleClose}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Create a new lead</DialogTitle>
