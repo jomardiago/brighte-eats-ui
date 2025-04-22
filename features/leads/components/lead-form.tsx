@@ -2,7 +2,6 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -16,25 +15,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
-import { ServiceType } from "../schemas";
-
-const formSchema = z.object({
-  name: z.string().min(6, {
-    message: "Name must be at least 6 characters",
-  }),
-  email: z.string().email({
-    message: "Invalid email",
-  }),
-  mobile: z.string().min(1, {
-    message: "Mobile number is required",
-  }),
-  postcode: z.string().min(1, {
-    message: "Post code is required",
-  }),
-  types: z.array(z.nativeEnum(ServiceType)).min(1, {
-    message: "Select at least one service type",
-  }),
-});
+import { useCreateLead } from "../apis/use-create-lead";
+import { LeadFormSchema, ServiceType, formSchema } from "../schemas";
 
 const serviceTypeOptions = [
   { id: ServiceType.DELIVERY, label: "Delivery" },
@@ -43,7 +25,7 @@ const serviceTypeOptions = [
 ];
 
 export const LeadForm = () => {
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<LeadFormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
@@ -54,8 +36,10 @@ export const LeadForm = () => {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log({ values });
+  const createLead = useCreateLead();
+
+  const onSubmit = (values: LeadFormSchema) => {
+    createLead.mutate(values);
   };
 
   return (
