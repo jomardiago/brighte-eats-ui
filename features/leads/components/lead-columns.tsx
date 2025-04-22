@@ -41,7 +41,7 @@ export const leadColumns: ColumnDef<TLead>[] = [
     header: "Services",
     cell: ({ row }) => {
       return (
-        <div className="flex items-center justify-center gap-4">
+        <div className="flex gap-2">
           {row.original.services.map((service) => (
             <Badge key={service.id} variant="outline">
               {getServiceLabel(service.type)}

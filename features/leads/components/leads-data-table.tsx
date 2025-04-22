@@ -32,14 +32,17 @@ export function LeadsDataTable<TData, TValue>({
   });
 
   return (
-    <div className="rounded-md border bg-white shadow-md">
+    <div className="bg-white shadow-md">
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => {
                 return (
-                  <TableHead key={header.id} className="text-center">
+                  <TableHead
+                    key={header.id}
+                    className="border-r bg-blue-950 text-center text-white"
+                  >
                     {header.isPlaceholder
                       ? null
                       : flexRender(
@@ -60,7 +63,7 @@ export function LeadsDataTable<TData, TValue>({
                 data-state={row.getIsSelected() && "selected"}
               >
                 {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id}>
+                  <TableCell key={cell.id} className="border-r text-left">
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>
                 ))}
