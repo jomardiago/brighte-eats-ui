@@ -92,7 +92,7 @@ export function LeadsPieChart({ leads }: { leads: Array<TLead> }) {
                           y={(viewBox.cy || 0) + 24}
                           className="fill-muted-foreground"
                         >
-                          Services
+                          Total Selections
                         </tspan>
                       </text>
                     );
@@ -105,7 +105,7 @@ export function LeadsPieChart({ leads }: { leads: Array<TLead> }) {
       </CardContent>
       <CardFooter className="flex-col gap-2 text-sm">
         <div className="text-muted-foreground leading-none">
-          Showing total services
+          Showing Total Interests Per Services
         </div>
       </CardFooter>
     </Card>
