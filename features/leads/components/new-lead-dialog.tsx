@@ -17,7 +17,7 @@ export const NewLeadDialog = ({ handleClose }: { handleClose: () => void }) => {
           <DialogDescription></DialogDescription>
         </DialogHeader>
         <div>
-          <LeadForm />
+          <LeadForm handleClose={handleClose} />
         </div>
       </DialogContent>
     </Dialog>

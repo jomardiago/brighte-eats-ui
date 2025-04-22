@@ -1,7 +1,9 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader } from "lucide-react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -24,7 +26,7 @@ const serviceTypeOptions = [
   { id: ServiceType.PAYMENT, label: "Payment" },
 ];
 
-export const LeadForm = () => {
+export const LeadForm = ({ handleClose }: { handleClose: () => void }) => {
   const form = useForm<LeadFormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -39,7 +41,10 @@ export const LeadForm = () => {
   const createLead = useCreateLead();
 
   const onSubmit = (values: LeadFormSchema) => {
-    createLead.mutate(values);
+    createLead.mutate(values, {
+      onSuccess: () => handleClose(),
+      onError: () => toast.error("Unable to add lead."),
+    });
   };
 
   return (
@@ -146,8 +151,13 @@ export const LeadForm = () => {
           )}
         />
 
-        <Button type="submit" className="cursor-pointer">
-          Submit
+        <Button
+          type="submit"
+          className="cursor-pointer"
+          disabled={createLead.isPending}
+        >
+          Submit{" "}
+          {createLead.isPending && <Loader className="h-4 w-4 animate-spin" />}
         </Button>
       </form>
     </Form>
