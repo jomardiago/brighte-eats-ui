@@ -25,9 +25,15 @@ const createLead = (data: LeadFormSchema): Promise<TCreateLeadResponse> =>
         },
       },
     })
-    .then((response) => response.data.data.register)
+    .then((response) => {
+      if (response.data.errors) {
+        throw new Error(response.data.errors[0].message);
+      }
+
+      return response.data.data.register;
+    })
     .catch((error) => {
-      throw error.response.data;
+      throw error.message;
     });
 
 export const useCreateLead = () => {
@@ -39,6 +45,6 @@ export const useCreateLead = () => {
       queryClient.invalidateQueries({
         queryKey: ["leads"],
       }),
-    onError: (error: { message: string }) => error,
+    onError: (error: string) => error,
   });
 };

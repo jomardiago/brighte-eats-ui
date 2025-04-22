@@ -43,7 +43,7 @@ export const LeadForm = ({ handleClose }: { handleClose: () => void }) => {
   const onSubmit = (values: LeadFormSchema) => {
     createLead.mutate(values, {
       onSuccess: () => handleClose(),
-      onError: () => toast.error("Unable to add lead."),
+      onError: (error) => toast.error(error || "Unable to add lead."),
     });
   };
 
